@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/margin_s1"
+
+
+
+    app:ignore="NamespaceTypo"
+    cardview:cardCornerRadius="7dp"
+    cardview:cardElevation="3dp"
+    cardview:cardPreventCornerOverlap="false"
+    cardview:cardUseCompatPadding="true"
+       android:id="@+id/cardview"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="@dimen/margin_s1"
+        android:weightSum="4">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:id="@+id/teamIv"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/margin_s"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/teamNameTv"/>
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="date"
+                    android:id="@+id/playedTv"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:text="50"
+                    android:id="@+id/pointTv"/>
+            </FrameLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

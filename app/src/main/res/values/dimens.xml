@@ -1,0 +1,49 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+
+
+        <!--margin-->
+        <dimen name="margin_s">5dp</dimen>
+        <dimen name="margin_s1">10dp</dimen>
+        <dimen name="margin_s2">15dp</dimen>
+        <dimen name="margin_s3">20dp</dimen>
+        <dimen name="margin_s4">30dp</dimen>
+        <dimen name="margin_s5">50dp</dimen>
+        <dimen name="margin_s6">80dp</dimen>
+        <dimen name="margin_gender">35dp</dimen>
+
+        <!--text-->
+        <dimen name="text">17sp</dimen>
+        <dimen name="text_m">19sp</dimen>
+        <dimen name="text_l">30sp</dimen>
+        <dimen name="text_s">15sp</dimen>
+        <dimen name="text_t2">13sp</dimen>
+        <dimen name="text_t1">12sp</dimen>
+        <dimen name="text_t">10sp</dimen>
+        <dimen name="text_min">8sp</dimen>
+        <dimen name="text_view_height">45dp</dimen>
+
+        <!--button-->
+        <dimen name="button_height">55dp</dimen>
+        <dimen name="button_width">90dp</dimen>
+        <dimen name="button_comment_height">40dp</dimen>
+
+
+
+        <!--tab-->
+        <dimen name="corner_radius">8dp</dimen>
+        <dimen name="corner_radius_zero">0dp</dimen>
+        <dimen name="tab_space_top">4dp</dimen>
+        <dimen name="tab_space">0dp</dimen>
+        <dimen name="tab_space_plus1">3dp</dimen>
+        <dimen name="tab_space_bottom_line">36sp</dimen>
+        <dimen name="tab_space_unselected_top">6sp</dimen>
+
+        <!--rc-->
+        <dimen name="follow_h">90dp</dimen>
+
+
+</resources>

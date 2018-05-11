@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Movie</string>
+    <string name="api_key">2dcd5337446cbfc860a67095ea8f6e7d</string>
+    <string name="retry">retry</string>
+    <string name="cancel">cancel</string>
+    <string name="search">search</string>
+    <string name="vote">Vote: </string>
+    <string name="popularity">Popularity: </string>
+    <string name="overview">Overview:</string>
+    <string name="date">Date: </string>
+    <string name="adult">For Adult</string>
+    <string name="lang">Language: </string>
+</resources>

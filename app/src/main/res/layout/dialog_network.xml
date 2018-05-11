@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:paddingTop="@dimen/margin_s3"
+    android:paddingBottom="@dimen/margin_s3"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_s3"
+        android:layout_marginLeft="@dimen/margin_s1"
+        android:layout_marginRight="@dimen/margin_s1"
+
+        android:textAlignment="center"
+        android:textSize="@dimen/text_t2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_s3"
+        android:layout_marginRight="@dimen/margin_s3"
+        android:layout_marginTop="@dimen/margin_s3"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/yes"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_comment_height"
+            android:layout_marginLeft="@dimen/margin_s"
+            android:layout_marginRight="@dimen/margin_s"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/no"
+            android:textAllCaps="false"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_comment_height"
+            android:layout_marginLeft="@dimen/margin_s"
+            android:layout_marginRight="@dimen/margin_s"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/cancel"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</LinearLayout>

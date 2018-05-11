@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.caroleenanwar.movie.activities.SearchActivity">
+    <EditText
+        android:id="@+id/searchET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/margin_s1"
+        android:layout_marginRight="@dimen/margin_s1"
+
+        android:background="@drawable/search_background"
+        android:drawableLeft="@drawable/search"
+        android:drawablePadding="@dimen/margin_s1"
+        android:ems="10"
+        android:hint="@string/search"
+        android:imeOptions="actionSearch"
+        android:maxLines="1"
+        android:padding="@dimen/margin_s1"
+        android:singleLine="true"
+        android:textAlignment="viewStart"
+        android:layout_marginTop="@dimen/margin_s1"/>
+</LinearLayout>
