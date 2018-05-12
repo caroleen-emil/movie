@@ -83,9 +83,6 @@ public class MovieViewModel extends AndroidViewModel {
                     if (competitionses != null) {
                         mAllWords.setValue(competitionses.getmMovies());
                         mIsLoading = false;
-                        for (int i = 0; i < mAllWords.getValue().size(); i++) {
-                            insert(mAllWords.getValue().get(i));
-                        }
                         mCurrentPage = competitionses.getmPage();
                         mTotalPage = competitionses.getmTotalPage();
 
