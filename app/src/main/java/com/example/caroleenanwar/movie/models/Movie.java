@@ -50,6 +50,9 @@ public class Movie implements Parcelable {
     @ColumnInfo(name = "popularity")
     @SerializedName("popularity")
     private double popularity;
+    @ColumnInfo(name = "original_title")
+    @SerializedName("original_title")
+    private String  originalTitle;
     //gettter
     public String getPosterPath() {
         return posterPath;
@@ -94,6 +97,11 @@ public class Movie implements Parcelable {
     public int getVoteCount() {
         return voteCount;
     }
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
     public Movie(double popularity) {
         this.popularity = popularity;
     }
@@ -110,6 +118,7 @@ public class Movie implements Parcelable {
         overview= in.readString();
         backDropPath= in.readString();
         popularity= in.readDouble();
+        originalTitle= in.readString();
     }
 
 
@@ -159,6 +168,10 @@ public class Movie implements Parcelable {
         this.popularity = popularity;
     }
 
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -177,6 +190,7 @@ public class Movie implements Parcelable {
         dest.writeString(overview);
         dest.writeString(backDropPath);
         dest.writeDouble(popularity);
+        dest.writeString(originalTitle);
     }
     public static final Creator<Movie> CREATOR = new Creator<Movie>() {
         @Override
