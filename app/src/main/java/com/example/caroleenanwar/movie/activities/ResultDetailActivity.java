@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.GenericTransitionOptions;
 import com.bumptech.glide.Glide;
@@ -19,6 +20,8 @@ import com.example.caroleenanwar.movie.R;
 import com.example.caroleenanwar.movie.api.APIClient;
 import com.example.caroleenanwar.movie.models.Movie;
 import com.example.caroleenanwar.movie.models.MovieViewModel;
+
+import es.dmoral.toasty.Toasty;
 
 public class ResultDetailActivity extends AppCompatActivity {
     private ImageView mPosterIv;
@@ -93,6 +96,8 @@ public class ResultDetailActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mMovieViewModel.insert(movie);
+                Toasty.success(mContext, "Sucessfully save", Toast.LENGTH_SHORT, true).show();
+
             }
         });
     }
