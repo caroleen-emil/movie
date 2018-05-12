@@ -110,7 +110,7 @@ public class SearchActivity extends AppCompatActivity {
                             };
                         }
 
-                        if (observe == false)
+                      //  if (observe == false||mOnline)
                             mMovies.observe(SearchActivity.this, mObservable);
 
                     }

@@ -42,6 +42,7 @@ public class SearchResutActivity extends AppCompatActivity {
     private Boolean mOnline;
     private MediatorLiveData<List<Movie>> mMovies;
     private Observer<List<Movie>> mObservable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,8 +51,8 @@ public class SearchResutActivity extends AppCompatActivity {
         mContext = SearchResutActivity.this;
         initize();
         mMovieViewModel = ViewModelProviders.of(this).get(MovieViewModel.class);
-        if(getIntent().getExtras()!=null){
-            ArrayList<Movie>movies=getIntent(). getParcelableArrayListExtra("result");
+        if (getIntent().getExtras() != null) {
+            ArrayList<Movie> movies = getIntent().getParcelableArrayListExtra("result");
             mResultAdapter.add(movies);
         }
         mOnline = false;
@@ -83,23 +84,23 @@ public class SearchResutActivity extends AppCompatActivity {
         mMovieRv.addOnScrollListener(new PaginationScrollListener(mLinearLayout) {
             @Override
             protected void loadMoreItems() {
-                if(mContext!=null) {
+                if (mContext != null) {
                     mMovieViewModel.setmIsLoading(true);
                     if (mMovieViewModel.getmCurrentPage() < mMovieViewModel.getmTotalPage()) {
                         mMovieViewModel.setmCurrentPage(mMovieViewModel.getmCurrentPage() + 1);
                         if (WebserviceUtil.isNetworkOnline(mContext)) {
                             mOnline = true;
-                            mMovies= mMovieViewModel.getAllMovie(mSearch, mOnline);
-                            mObservable=new Observer<List<Movie>>() {
+                            mMovies = mMovieViewModel.getAllMovie(mSearch, mOnline);
+                            mObservable = new Observer<List<Movie>>() {
                                 @Override
                                 public void onChanged(@Nullable final List<Movie> words) {
                                     // Update the cached copy of the words in the adapter.
                                     mResultAdapter.add(words);
                                 }
                             };
-                            if(mMovies!=null &&mObservable!=null )
+                            if (mMovies != null && mObservable != null)
                                 mMovies.removeObserver(mObservable);
-                            mMovies.observe(SearchResutActivity.this,mObservable);
+                            mMovies.observe(SearchResutActivity.this, mObservable);
                         }
                     }
                 }
@@ -169,11 +170,12 @@ public class SearchResutActivity extends AppCompatActivity {
 //        }
 
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-        mContext=null;
-        if(mMovies!=null &&mObservable!=null )
-        mMovies.removeObserver(mObservable);
+        mContext = null;
+        if (mMovies != null && mObservable != null)
+            mMovies.removeObserver(mObservable);
     }
 }
