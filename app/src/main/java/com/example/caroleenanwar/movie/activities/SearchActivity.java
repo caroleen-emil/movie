@@ -31,41 +31,45 @@ import cc.cloudist.acplibrary.ACProgressFlower;
 import es.dmoral.toasty.Toasty;
 
 public class SearchActivity extends AppCompatActivity {
-     private EditText searchET;
+    private EditText searchET;
     private ACProgressBaseDialog progressDialog;
-     //data
-     private Context mContext;
+    //data
+    private Context mContext;
     private Boolean mOnline;
     private MovieViewModel mMovieViewModel;
     private MediatorLiveData<List<Movie>> mMovies;
     private Observer<List<Movie>> mObservable;
-    private Boolean observe=false;
+    private Boolean observe = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
-        mContext=SearchActivity.this;
+        mContext = SearchActivity.this;
         bindView();
         handlistener();
     }
+
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
-        mContext=SearchActivity.this;
+        mContext = SearchActivity.this;
     }
-    private void bindView(){
-        searchET=findViewById(R.id.searchET);
+
+    private void bindView() {
+        searchET = findViewById(R.id.searchET);
     }
-    private void handlistener(){
+
+    private void handlistener() {
         searchET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 
                 if ((actionId == EditorInfo.IME_ACTION_SEARCH)) {
                     hideKeyBoard(SearchActivity.this);
-                   final String search=searchET.getText().toString().trim();
-                    if(search.length()>0) {
-                        if( mMovieViewModel==null) {
+                    final String search = searchET.getText().toString().trim();
+                    if (search.length() > 0) {
+                        if (mMovieViewModel == null) {
                             mMovieViewModel = ViewModelProviders.of(SearchActivity.this).get(MovieViewModel.class);
                         }
                         mMovieViewModel.setmCurrentPage(1);
@@ -80,33 +84,34 @@ public class SearchActivity extends AppCompatActivity {
                             progressDialog.show();
                         }
                         //check observe already register
-                        if(mMovies!=null &&mObservable!=null )
-                            observe=true;
-                        mMovies= mMovieViewModel.getAllMovie(search, mOnline);
+                        if (mMovies != null && mObservable != null)
+                            observe = true;
+                        mMovies = mMovieViewModel.getAllMovie(search, mOnline);
 
-                        if(mObservable==null){
-                        mObservable= new Observer<List<Movie>>() {
-                            @Override
-                            public void onChanged(@Nullable final List<Movie> words) {
-                                // Update the cached copy of the words in the adapter.
-                                if(progressDialog!=null)
-                                progressDialog.dismiss();
-                                if(mContext!=null) {
-                                    if (words.size() > 0) {
-                                        Intent intent = new Intent(mContext, SearchResutActivity.class);
-                                        intent.putExtra("search", search);
-                                        intent.putParcelableArrayListExtra("result", (ArrayList) words);
-                                        startActivity(intent);
+                        if (mObservable == null) {
+                            mObservable = new Observer<List<Movie>>() {
+                                @Override
+                                public void onChanged(@Nullable final List<Movie> words) {
+                                    // Update the cached copy of the words in the adapter.
+                                    if (progressDialog != null)
+                                        progressDialog.dismiss();
+                                    if (mContext != null) {
+                                        if (words.size() > 0) {
+                                            Intent intent = new Intent(mContext, SearchResutActivity.class);
+                                            intent.putExtra("search", search);
+                                            intent.putParcelableArrayListExtra("result", (ArrayList) words);
+                                            startActivity(intent);
 
-                                    } else
-                                        Toasty.info(mContext, "No Result found or check network", Toast.LENGTH_SHORT, true).show();
+                                        } else
+                                            Toasty.info(mContext, "No Result found or check network", Toast.LENGTH_SHORT, true).show();
+                                    }
+
                                 }
+                            };
+                        }
 
-                            }
-                        };}
-
-                        if(observe==false)
-                        mMovies.observe(SearchActivity.this, mObservable);
+                        if (observe == false)
+                            mMovies.observe(SearchActivity.this, mObservable);
 
                     }
                 }
@@ -114,17 +119,19 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-    public  void hideKeyBoard(AppCompatActivity context) {
+
+    public void hideKeyBoard(AppCompatActivity context) {
         View view = context.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
+
     @Override
-    protected void onPause(){
+    protected void onPause() {
         super.onPause();
-        mContext=null;
+        mContext = null;
 //        if(mMovies!=null &&mObservable!=null )
 //        mMovies.removeObserver(mObservable);
     }
