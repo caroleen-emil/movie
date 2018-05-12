@@ -74,7 +74,7 @@ public class ResultDetailActivity extends AppCompatActivity {
             String imageUrl = APIClient.getImageBase() + movie.getPosterPath();
             RequestOptions requestOptions = new RequestOptions();
             requestOptions.placeholder(R.drawable.movie).diskCacheStrategy(DiskCacheStrategy.ALL);
-            requestOptions.error(R.mipmap.ic_launcher);
+            requestOptions.error(R.drawable.movie);
             Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).transition(GenericTransitionOptions.with(R.anim.zoom_in)).into(mPosterIv);
             //setText
             mVoteTv.setText(movie.getVoteCount() + "");
