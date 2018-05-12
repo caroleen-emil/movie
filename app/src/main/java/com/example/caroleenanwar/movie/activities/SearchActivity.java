@@ -48,6 +48,9 @@ public class SearchActivity extends AppCompatActivity {
         setContentView(R.layout.activity_search);
         mContext = SearchActivity.this;
         bindView();
+        if (mMovieViewModel == null) {
+            mMovieViewModel = ViewModelProviders.of(SearchActivity.this).get(MovieViewModel.class);
+        }
         handlistener();
     }
 
@@ -70,19 +73,12 @@ public class SearchActivity extends AppCompatActivity {
                     hideKeyBoard(SearchActivity.this);
                     final String search = searchET.getText().toString().trim();
                     if (search.length() > 0) {
-                        if (mMovieViewModel == null) {
-                            mMovieViewModel = ViewModelProviders.of(SearchActivity.this).get(MovieViewModel.class);
-                        }
+
                         mMovieViewModel.setmCurrentPage(1);
                         mOnline = false;
                         if (WebserviceUtil.isNetworkOnline(mContext)) {
                             mOnline = true;
-                            progressDialog = new ACProgressFlower.Builder(mContext)
-                                    .direction(ACProgressConstant.DIRECT_ANTI_CLOCKWISE)
-                                    .themeColor(Color.WHITE)
-                                    .fadeColor(Color.DKGRAY).build();
-                            progressDialog.setCancelable(false);
-                            progressDialog.show();
+                            showDialog();
                         }
                         //check observe already register
                         if (mMovies != null && mObservable != null)
@@ -137,6 +133,15 @@ public class SearchActivity extends AppCompatActivity {
             InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
+    }
+
+    private void showDialog() {
+        progressDialog = new ACProgressFlower.Builder(mContext)
+                .direction(ACProgressConstant.DIRECT_ANTI_CLOCKWISE)
+                .themeColor(Color.WHITE)
+                .fadeColor(Color.DKGRAY).build();
+        progressDialog.setCancelable(false);
+        progressDialog.show();
     }
 
     @Override
