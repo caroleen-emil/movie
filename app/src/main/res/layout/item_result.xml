@@ -40,7 +40,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/teamNameTv"/>
+                android:id="@+id/teamNameTv"
+                android:textStyle="bold"/>
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">

@@ -93,7 +93,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.CustomView
 
         //set Text
         customViewHolder.mTeamTv.setText(movie.getName());
-        customViewHolder.mPointTv.setText(movie.getVoteCount() + "");
+        customViewHolder.mPointTv.setText(movie.getVoteAverage() + "");
         customViewHolder.mPlayedGame.setText(movie.getReleaseDate() + "");
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override

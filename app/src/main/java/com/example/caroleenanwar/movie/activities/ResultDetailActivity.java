@@ -20,6 +20,7 @@ import com.example.caroleenanwar.movie.models.Movie;
 public class ResultDetailActivity extends AppCompatActivity {
     private ImageView mPosterIv;
     private TextView mVoteTv;
+    private TextView mVoteAverageTv;
     private TextView mPopularityTv;
     private TextView mOverviewTv;
     private TextView mDateTv;
@@ -41,6 +42,7 @@ public class ResultDetailActivity extends AppCompatActivity {
         mPosterIv = findViewById(R.id.posterIV);
 
         mVoteTv = findViewById(R.id.voteTv);
+        mVoteAverageTv= findViewById(R.id.voteAverageTv);
         mPopularityTv = findViewById(R.id.popularityTv);
         mOverviewTv = findViewById(R.id.overviewTv);
         mDateTv = findViewById(R.id.dateTv);
@@ -66,6 +68,7 @@ public class ResultDetailActivity extends AppCompatActivity {
             Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).transition(GenericTransitionOptions.with(R.anim.zoom_in)).into(mPosterIv);
             //setText
             mVoteTv.setText(movie.getVoteCount() + "");
+            mVoteAverageTv.setText(movie.getVoteAverage()+"");
             mPopularityTv.setText(movie.getPopularity() + "");
             mOverviewTv.setText(movie.getOverview());
             mDateTv.setText(movie.getReleaseDate());

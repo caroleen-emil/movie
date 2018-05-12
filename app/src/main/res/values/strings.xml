@@ -5,6 +5,7 @@
     <string name="cancel">cancel</string>
     <string name="search">search</string>
     <string name="vote">Vote: </string>
+    <string name="voteAverage">Vote Average: </string>
     <string name="popularity">Popularity: </string>
     <string name="overview">Overview:</string>
     <string name="date">Date: </string>
