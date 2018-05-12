@@ -1,5 +1,6 @@
 package com.example.caroleenanwar.movie.activities;
 
+import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -39,7 +40,8 @@ public class SearchResutActivity extends AppCompatActivity {
     private String mSearch;
     private Boolean mIsLastPage = false;
     private Boolean mOnline;
-
+    private MediatorLiveData<List<Movie>> mMovies;
+    private Observer<List<Movie>> mObservable;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,18 +58,7 @@ public class SearchResutActivity extends AppCompatActivity {
         if (WebserviceUtil.isNetworkOnline(mContext)) {
             mOnline = true;
         }
-//        mMovieViewModel.getAllMovie(mSearch, mOnline).observe(this, new Observer<List<Movie>>() {
-//            @Override
-//            public void onChanged(@Nullable final List<Movie> words) {
-//                // Update the cached copy of the words in the adapter.
-//                if(words.size()>0) {
-//                    mResultAdapter.add(words);
-//                }else
-//                    Toasty.info(mContext, "No Result found", Toast.LENGTH_SHORT, true).show();
-//
-//
-//            }
-//        });
+
 
         handleListener();
     }
@@ -98,14 +89,17 @@ public class SearchResutActivity extends AppCompatActivity {
                         mMovieViewModel.setmCurrentPage(mMovieViewModel.getmCurrentPage() + 1);
                         if (WebserviceUtil.isNetworkOnline(mContext)) {
                             mOnline = true;
-
-                            mMovieViewModel.getAllMovie(mSearch, mOnline).observe(SearchResutActivity.this, new Observer<List<Movie>>() {
+                            mMovies= mMovieViewModel.getAllMovie(mSearch, mOnline);
+                            mObservable=new Observer<List<Movie>>() {
                                 @Override
                                 public void onChanged(@Nullable final List<Movie> words) {
                                     // Update the cached copy of the words in the adapter.
                                     mResultAdapter.add(words);
                                 }
-                            });
+                            };
+                            if(mMovies!=null &&mObservable!=null )
+                                mMovies.removeObserver(mObservable);
+                            mMovies.observe(SearchResutActivity.this,mObservable);
                         }
                     }
                 }
@@ -139,6 +133,7 @@ public class SearchResutActivity extends AppCompatActivity {
          GET List of competition
          **/
         mApiInterface = APIClient.getClient().create(APIInterface.class);
+
         Call<MoviesResult> call = mApiInterface.getMovies(1, movies, APIClient.getToken());
         call.enqueue(new Callback<MoviesResult>() {
             @Override
@@ -178,6 +173,7 @@ public class SearchResutActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         mContext=null;
-      //  mMovies.removeObserver(mObservable);
+        if(mMovies!=null &&mObservable!=null )
+        mMovies.removeObserver(mObservable);
     }
 }

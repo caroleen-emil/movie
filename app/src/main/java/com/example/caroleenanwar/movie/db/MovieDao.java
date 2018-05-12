@@ -1,10 +1,12 @@
-package com.example.caroleenanwar.movie.models;
+package com.example.caroleenanwar.movie.db;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+
+import com.example.caroleenanwar.movie.models.Movie;
 
 import java.util.List;
 

@@ -39,6 +39,7 @@ public class SearchActivity extends AppCompatActivity {
     private MovieViewModel mMovieViewModel;
     private MediatorLiveData<List<Movie>> mMovies;
     private Observer<List<Movie>> mObservable;
+    private Boolean observe=false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,8 +79,12 @@ public class SearchActivity extends AppCompatActivity {
                             progressDialog.setCancelable(false);
                             progressDialog.show();
                         }
-
+                        //check observe already register
+                        if(mMovies!=null &&mObservable!=null )
+                            observe=true;
                         mMovies= mMovieViewModel.getAllMovie(search, mOnline);
+
+                        if(mObservable==null){
                         mObservable= new Observer<List<Movie>>() {
                             @Override
                             public void onChanged(@Nullable final List<Movie> words) {
@@ -94,11 +99,13 @@ public class SearchActivity extends AppCompatActivity {
                                         startActivity(intent);
 
                                     } else
-                                        Toasty.info(mContext, "No Result found", Toast.LENGTH_SHORT, true).show();
+                                        Toasty.info(mContext, "No Result found or check network", Toast.LENGTH_SHORT, true).show();
                                 }
 
                             }
-                        };
+                        };}
+
+                        if(observe==false)
                         mMovies.observe(SearchActivity.this, mObservable);
 
                     }
@@ -118,6 +125,7 @@ public class SearchActivity extends AppCompatActivity {
     protected void onPause(){
         super.onPause();
         mContext=null;
-        mMovies.removeObserver(mObservable);
+//        if(mMovies!=null &&mObservable!=null )
+//        mMovies.removeObserver(mObservable);
     }
 }
