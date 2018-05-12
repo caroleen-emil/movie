@@ -20,6 +20,7 @@ import com.example.caroleenanwar.movie.helper.PaginationScrollListener;
 import com.example.caroleenanwar.movie.models.Movie;
 import com.example.caroleenanwar.movie.models.MovieViewModel;
 import com.example.caroleenanwar.movie.models.MoviesResult;
+import com.example.caroleenanwar.movie.utils.PrefUtils;
 import com.example.caroleenanwar.movie.utils.WebserviceUtil;
 
 import java.util.ArrayList;
@@ -42,6 +43,7 @@ public class SearchResutActivity extends AppCompatActivity {
     private Boolean mOnline;
     private MediatorLiveData<List<Movie>> mMovies;
     private Observer<List<Movie>> mObservable;
+    private Boolean mPreviusOnline = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,13 +57,35 @@ public class SearchResutActivity extends AppCompatActivity {
             ArrayList<Movie> movies = getIntent().getParcelableArrayListExtra("result");
             mResultAdapter.add(movies);
         }
-        mOnline = false;
-        if (WebserviceUtil.isNetworkOnline(mContext)) {
-            mOnline = true;
+
+        if (!WebserviceUtil.isNetworkOnline(mContext)) {
+            mOnline = false;
+            mMovies = mMovieViewModel.getAllMovie(mSearch, mOnline, false);
+            mObservable = new Observer<List<Movie>>() {
+                @Override
+                public void onChanged(@Nullable final List<Movie> words) {
+                    // Update the cached copy of the words in the adapter.
+
+                    if (words.size() > 0) {
+                        mResultAdapter.add(words);
+                    } else
+                        mIsLastPage = true;
+
+                }
+            };
+            if (mMovies != null && mObservable != null)
+                mMovies.removeObserver(mObservable);
+            mMovies.observe(SearchResutActivity.this, mObservable);
         }
 
 
         handleListener();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mContext = SearchResutActivity.this;
     }
 
     private void initView() {
@@ -77,6 +101,8 @@ public class SearchResutActivity extends AppCompatActivity {
         // getMovies("the");
         if (getIntent().getExtras() != null) {
             mSearch = getIntent().getStringExtra("search");
+            mPreviusOnline = getIntent().getBooleanExtra("online", false);
+            ;
         }
     }
 
@@ -84,26 +110,34 @@ public class SearchResutActivity extends AppCompatActivity {
         mMovieRv.addOnScrollListener(new PaginationScrollListener(mLinearLayout) {
             @Override
             protected void loadMoreItems() {
-                if (mContext != null) {
-                    mMovieViewModel.setmIsLoading(true);
-                    if (mMovieViewModel.getmCurrentPage() < mMovieViewModel.getmTotalPage()) {
-                        mMovieViewModel.setmCurrentPage(mMovieViewModel.getmCurrentPage() + 1);
+                if (mPreviusOnline)
+                    if (mContext != null) {
+
                         if (WebserviceUtil.isNetworkOnline(mContext)) {
+                            mMovieViewModel.setmIsLoading(true);
                             mOnline = true;
-                            mMovies = mMovieViewModel.getAllMovie(mSearch, mOnline);
-                            mObservable = new Observer<List<Movie>>() {
-                                @Override
-                                public void onChanged(@Nullable final List<Movie> words) {
-                                    // Update the cached copy of the words in the adapter.
-                                    mResultAdapter.add(words);
-                                }
-                            };
-                            if (mMovies != null && mObservable != null)
-                                mMovies.removeObserver(mObservable);
-                            mMovies.observe(SearchResutActivity.this, mObservable);
+                            if (mMovieViewModel.getmCurrentPage() < mMovieViewModel.getmTotalPage()) {
+                                mMovieViewModel.setmCurrentPage(mMovieViewModel.getmCurrentPage() + 1);
+
+                                mMovies = mMovieViewModel.getAllMovie(mSearch, mOnline, false);
+                                mObservable = new Observer<List<Movie>>() {
+                                    @Override
+                                    public void onChanged(@Nullable final List<Movie> words) {
+                                        // Update the cached copy of the words in the adapter.
+
+                                        if (words.size() > 0) {
+                                            mResultAdapter.add(words);
+                                        } else
+                                            mIsLastPage = true;
+                                    }
+
+                                };
+                                if (mMovies != null && mObservable != null)
+                                    mMovies.removeObserver(mObservable);
+                                mMovies.observe(SearchResutActivity.this, mObservable);
+                            }
                         }
                     }
-                }
             }
 
             @Override

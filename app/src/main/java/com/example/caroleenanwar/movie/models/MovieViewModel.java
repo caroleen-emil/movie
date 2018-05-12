@@ -37,13 +37,13 @@ public class MovieViewModel extends AndroidViewModel {
         // mAllWords = mRepository.getAllMovie();
     }
 
-    public MediatorLiveData<List<Movie>> getAllMovie(String movie, Boolean online) {
+    public MediatorLiveData<List<Movie>> getAllMovie(String movie, Boolean online,Boolean firstRows) {
         if (online) {
             mAllWords = getMovies(movie);
 
         } else {
             mAllWords = new MediatorLiveData<List<Movie>>();
-            mAllWords = getAllMovies(movie);
+            mAllWords = getAllMovies(movie,firstRows);
 
         }
         return mAllWords;
@@ -51,8 +51,9 @@ public class MovieViewModel extends AndroidViewModel {
 
     private MediatorLiveData<List<Movie>> mSectionLive = new MediatorLiveData<>();
 
-    public MediatorLiveData<List<Movie>> getAllMovies(String movie) {
-        final LiveData<List<Movie>> sections = mRepository.getAllMovie(movie);
+    public MediatorLiveData<List<Movie>> getAllMovies(String movie,Boolean firstRows) {
+
+        final LiveData<List<Movie>> sections = mRepository.getAllMovie(movie,firstRows);
 
         mSectionLive.addSource(sections, new Observer<List<Movie>>() {
             @Override
@@ -60,6 +61,7 @@ public class MovieViewModel extends AndroidViewModel {
 
                 mSectionLive.removeSource(sections);
                 mSectionLive.setValue(sectionList);
+
             }
         });
         return mSectionLive;
@@ -80,12 +82,13 @@ public class MovieViewModel extends AndroidViewModel {
                     MoviesResult competitionses = response.body();
                     if (competitionses != null) {
                         mAllWords.setValue(competitionses.getmMovies());
+                        mIsLoading = false;
                         for (int i = 0; i < mAllWords.getValue().size(); i++) {
                             insert(mAllWords.getValue().get(i));
                         }
                         mCurrentPage = competitionses.getmPage();
                         mTotalPage = competitionses.getmTotalPage();
-                        mIsLoading = false;
+
 
                     }
                 }

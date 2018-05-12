@@ -31,6 +31,7 @@ public class WebserviceUtil {
 
     }
 
+
     public static Dialog showNewDialog(Context mContext){
         final Dialog dialog = new Dialog(mContext);
         dialog.setContentView(R.layout.dialog_network);

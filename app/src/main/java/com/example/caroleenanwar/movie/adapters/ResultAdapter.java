@@ -84,16 +84,12 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.CustomView
         int width = displayMetrics.widthPixels;
         customViewHolder.mTeamImageView.getLayoutParams().width = (int) (width * 0.25);
         customViewHolder.mTeamImageView.getLayoutParams().height = (int) (width * 0.25);
-        String imageUrl= APIClient.getImageBase()+movie.getPosterPath();
+        String imageUrl = APIClient.getImageBase() + movie.getPosterPath();
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.override(width ,width).placeholder(R.mipmap.ic_launcher) .diskCacheStrategy(DiskCacheStrategy.ALL);
+        requestOptions.override(width, width).placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         requestOptions.error(R.mipmap.ic_launcher);
-             Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).into(customViewHolder.mTeamImageView);
-//        Picasso.with( mContext )
-//                .load( imageUrl )
-//                .error( R.mipmap.ic_launcher)
-//                .placeholder( R.mipmap.ic_launcher )
-//                .into(customViewHolder.mTeamImageView );
+        Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).into(customViewHolder.mTeamImageView);
+
 
         //set Text
         customViewHolder.mTeamTv.setText(movie.getName());
@@ -102,9 +98,9 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.CustomView
         customViewHolder.mCardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(mContext, ResultDetailActivity.class);
-                intent.putExtra("movie",Movies.get(i));
-                ((Activity)mContext).startActivity(intent);
+                Intent intent = new Intent(mContext, ResultDetailActivity.class);
+                intent.putExtra("movie", Movies.get(i));
+                ((Activity) mContext).startActivity(intent);
             }
         });
 
@@ -123,16 +119,17 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.CustomView
         private TextView mTeamTv;
         private TextView mPlayedGame;
         private TextView mPointTv;
-        private CardView mCardView  ;
+        private CardView mCardView;
+
         public CustomViewHolder(View view) {
             super(view);
             //bind variable
             mTeamImageView = view.findViewById(R.id.teamIv);
             mTeamTv = view.findViewById(R.id.teamNameTv);
 
-            mPointTv = (TextView)view.findViewById(R.id.pointTv);
+            mPointTv = (TextView) view.findViewById(R.id.pointTv);
             mPlayedGame = view.findViewById(R.id.playedTv);
-            mCardView=view.findViewById(R.id.cardview);
+            mCardView = view.findViewById(R.id.cardview);
         }
     }
 }

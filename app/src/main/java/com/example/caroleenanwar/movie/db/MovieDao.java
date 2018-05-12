@@ -21,7 +21,10 @@ public interface MovieDao {
     @Query("DELETE FROM movie_table")
     void deleteAll();
 
-    @Query("SELECT * from movie_table WHERE title LIKE :titleInput ORDER BY release_date DESC")
+
+  @Query("SELECT * from movie_table WHERE title LIKE :titleInput ORDER BY release_date DESC  limit 10  ")
+    LiveData<List<Movie>> getAllFirstMovie(String titleInput);
+    @Query("SELECT * from movie_table WHERE title LIKE :titleInput ORDER BY release_date DESC  limit -1 OFFSET 10 ")
     LiveData<List<Movie>> getAllMovie(String titleInput);
     @Query("SELECT COUNT( *) from movie_table WHERE id=:idInput ORDER BY release_date ASC")
     int getAllCount(int idInput);

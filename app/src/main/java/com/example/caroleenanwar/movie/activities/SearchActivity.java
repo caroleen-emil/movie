@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.example.caroleenanwar.movie.R;
 import com.example.caroleenanwar.movie.models.Movie;
 import com.example.caroleenanwar.movie.models.MovieViewModel;
+import com.example.caroleenanwar.movie.utils.PrefUtils;
 import com.example.caroleenanwar.movie.utils.WebserviceUtil;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class SearchActivity extends AppCompatActivity {
                         //check observe already register
                         if (mMovies != null && mObservable != null)
                             observe = true;
-                        mMovies = mMovieViewModel.getAllMovie(search, mOnline);
+                        mMovies = mMovieViewModel.getAllMovie(search, mOnline, true);
 
                         if (mObservable == null) {
                             mObservable = new Observer<List<Movie>>() {
@@ -97,10 +98,20 @@ public class SearchActivity extends AppCompatActivity {
                                         progressDialog.dismiss();
                                     if (mContext != null) {
                                         if (words.size() > 0) {
+                                            Boolean online = false;
+                                            if (WebserviceUtil.isNetworkOnline(mContext)) {
+                                                online = true;
+                                            }
                                             Intent intent = new Intent(mContext, SearchResutActivity.class);
                                             intent.putExtra("search", search);
-                                            intent.putParcelableArrayListExtra("result", (ArrayList) words);
-                                            startActivity(intent);
+                                            intent.putExtra("online", online);
+                                            try {
+                                                intent.putParcelableArrayListExtra("result", (ArrayList) words);
+                                                startActivity(intent);
+                                            } catch (Exception ex) {
+                                                ex.printStackTrace();
+                                            }
+
 
                                         } else
                                             Toasty.info(mContext, "No Result found or check network", Toast.LENGTH_SHORT, true).show();
@@ -110,8 +121,8 @@ public class SearchActivity extends AppCompatActivity {
                             };
                         }
 
-                      //  if (observe == false||mOnline)
-                            mMovies.observe(SearchActivity.this, mObservable);
+                        //  if (observe == false||mOnline)
+                        mMovies.observe(SearchActivity.this, mObservable);
 
                     }
                 }

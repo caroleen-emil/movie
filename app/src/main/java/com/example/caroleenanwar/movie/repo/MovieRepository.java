@@ -26,7 +26,10 @@ public class MovieRepository {
 
     }
 
-    public LiveData<List<Movie>> getAllMovie(String movie) {
+    public LiveData<List<Movie>> getAllMovie(String movie,Boolean firstRows) {
+        if(firstRows){
+            mAllMovie=  mWordDao.getAllFirstMovie('%' + movie + '%');
+        }else
         mAllMovie = mWordDao.getAllMovie('%' + movie + '%');
 //int size=mWordDao.getAllMovie().getValue().size();
         return mAllMovie;
