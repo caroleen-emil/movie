@@ -86,7 +86,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.CustomView
         customViewHolder.mTeamImageView.getLayoutParams().height = (int) (width * 0.25);
         String imageUrl = APIClient.getImageBase() + movie.getPosterPath();
         RequestOptions requestOptions = new RequestOptions();
-        requestOptions.override(width, width).placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
+        requestOptions.override(width, width).placeholder(R.drawable.movie).diskCacheStrategy(DiskCacheStrategy.RESOURCE);
         requestOptions.error(R.mipmap.ic_launcher);
         Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).into(customViewHolder.mTeamImageView);
 

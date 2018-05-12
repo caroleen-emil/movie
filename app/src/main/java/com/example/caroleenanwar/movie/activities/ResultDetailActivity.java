@@ -73,7 +73,7 @@ public class ResultDetailActivity extends AppCompatActivity {
             movie = getIntent().getParcelableExtra("movie");
             String imageUrl = APIClient.getImageBase() + movie.getPosterPath();
             RequestOptions requestOptions = new RequestOptions();
-            requestOptions.placeholder(R.mipmap.ic_launcher).diskCacheStrategy(DiskCacheStrategy.ALL);
+            requestOptions.placeholder(R.drawable.movie).diskCacheStrategy(DiskCacheStrategy.ALL);
             requestOptions.error(R.mipmap.ic_launcher);
             Glide.with(mContext).setDefaultRequestOptions(requestOptions).load(imageUrl).transition(GenericTransitionOptions.with(R.anim.zoom_in)).into(mPosterIv);
             //setText
